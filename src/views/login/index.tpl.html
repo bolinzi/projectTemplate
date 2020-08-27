@@ -1,0 +1,36 @@
+<div class="login">
+    <div class="login-box">
+        <div class="left">
+            <img :src="leftImg">
+        </div>
+        <div class="main">
+            <h2>后台系统登录</h2>
+            <Form
+                ref="formLogin"
+                :model="formLogin"
+                :rules="ruleLogin">
+                <FormItem prop="userName">
+                    <Input type="text" placeholder="请输入用户名" v-model="formLogin.userName">
+                        <Icon type="ios-person-outline" slot="prepend"></Icon>
+                    </Input>
+                </FormItem>
+                <FormItem prop="password">
+                    <Input
+                        type="password"
+                        v-model="formLogin.password"
+                        placeholder="请输入密码"
+                        @keyup.enter.native="handleSubmit">
+                        <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                    </Input>
+                </FormItem>
+                <Button
+                    class="login-btn"
+                    id="login-btn"
+                    type="primary" 
+                    :loading="loading" 
+                    @click="handleSubmit">登录</Button>
+            </Form>
+            <img class="login-bt" :src="loginBt">
+        </div>
+    </div>
+</div>

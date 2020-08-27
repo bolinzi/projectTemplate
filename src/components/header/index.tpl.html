@@ -1,0 +1,37 @@
+<div class="header">
+    <div class="userinfo-wrapper">
+        <Dropdown class="drop" trigger="click" @on-click="handleDropdown">
+            <span class="name">
+                欢迎您:
+                <img v-if="userInfo.avatar" class="avatar" :src="userInfo.avatar" />
+                <Avatar v-else icon="ios-person" style="margin: 0 5px;"/>
+                <span>{{userInfo.username}}</span>
+                <Icon type="ios-arrow-down"></Icon>
+            </span>
+            <DropdownMenu slot="list">
+                <DropdownItem name="putPassword">修改密码</DropdownItem>
+                <DropdownItem name="signOut">退出登录</DropdownItem>
+            </DropdownMenu>
+        </Dropdown>
+    </div>
+    <Modal width="600px" title="修改密码" v-model="passwordDialog" :mask-closable="false" >
+        <Form ref="password" :model="passwords" :rules="passwordRule" :label-width="80">
+            <Row type="flex" justify="center">
+                <Col span="16" key="password">
+                    <FormItem label="旧密码: " prop="password">
+                        <Input v-model="passwords.password" placeholder="请输入旧密码"></Input>
+                    </FormItem>
+                </Col>
+                <Col span="16" key="newpassword1">
+                    <FormItem label="新密码: " prop="newpassword1">
+                        <Input v-model="passwords.newpassword1" placeholder="请输入新密码"></Input>
+                    </FormItem>
+                </Col>
+            </Row>
+        </Form>
+        <div class="footer" slot="footer">
+            <Button @click="passwordDialog = false;">取消</Button>
+            <Button type="primary" :loading="btnLoading" @click="putPassword">确定</Button>
+        </div>
+    </Modal>
+</div>

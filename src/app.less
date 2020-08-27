@@ -1,0 +1,57 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    font-size: 12px !important;
+}
+#app {
+    width: 100%;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: left;
+    > .main {
+        height: 100%;
+        padding: 70px 20px 20px 220px;
+        background-color: #f0f2f5;
+    }
+}
+.ivu-breadcrumb {
+    text-align: left;
+}
+.content {
+    height: ~'calc(100% - 38px)';
+    padding: 24px !important;
+    margin-top: 14px !important;
+    background: #fff;
+}
+.custom-spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+}
+.page {
+    margin-top: 12px;
+    text-align: right;
+}
+.ivu-select-dropdown {
+    z-index: 9999 !important;
+}
+.status-warning {
+    display: block;
+    margin-top: 5px;
+    line-height: 20px;
+    color: @warning-color;
+}
+.clearfix::after {
+    clear: both;
+    display: block;
+    content: '';
+}

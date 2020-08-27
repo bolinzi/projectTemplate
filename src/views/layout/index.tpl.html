@@ -1,0 +1,69 @@
+<div class="layout">
+    <Layout>
+        <Sider
+            hide-trigger 
+            collapsible
+            ref="side1" 
+            v-model="isCollapsed"
+            :collapsed-width="78">
+            <div class="sidebar-logo">
+                <img :src="logo">
+                <h1>物业CRM2.0</h1>
+            </div>
+            <Menu
+                accordion
+                theme="light" 
+                width="auto"
+                :active-name="active" 
+                :open-names="activeArry" 
+                :class="menuitemClasses" 
+                @on-select="select"
+                @on-open-change="open">
+                <!-- <template v-for="item in menu"> -->
+                    <!-- <Submenu v-if="item.children.length > 0" :key="item.id" :name="item.routerName">
+                        <template slot="title">
+                            <Icon size="16" :type="item.icon"></Icon>
+                            <span class="layout-hide">{{item.name}}</span>
+                        </template>
+                        <MenuItem
+                            v-for="(element, index) in item.children"
+                            :key="index"
+                            :name="element.routerName"
+                            :to="element.path">
+                            <span>{{element.name}}</span>
+                        </MenuItem>
+                    </Submenu>
+                   <MenuItem v-else :name="item.routerName" :to="item.path">
+                        <Icon size="16" :type="item.icon"></Icon>
+                        <span class="layout-hide">{{item.name}}</span>
+                    </MenuItem> -->
+                <!-- </template> -->
+                <MenuItem name="welcome" to="/welcome">
+                    <Icon type="md-share"/>
+                    <span class="layout-hide">欢迎</span>
+                </MenuItem>
+                <MenuItem name="highChart" to="/highChart">
+                    <Icon type="md-share"/>
+                    <span class="layout-hide">图表</span>
+                </MenuItem>
+            </Menu>
+        </Sider>
+        <Layout>
+            <div class="header-fix">
+                <Header class="layout-header-bar" :style="{padding: 0}">
+                    <Icon
+                        size="24"
+                        type="md-menu" 
+                        :class="rotateIcon" 
+                        :style="{margin: '0 20px', color: '#7F859B'}" 
+                        @click.native="collapsedSider"></Icon>
+                    <TopHeader v-if="!$route.meta.hideHeader" />
+                </Header>
+            </div>
+            
+            <Content :style="{margin: '70px 20px 20px 20px', background: '#fff'}">
+                <router-view class="main" />
+            </Content>
+        </Layout>
+    </Layout>
+</div>

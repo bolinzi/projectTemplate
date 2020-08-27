@@ -1,0 +1,46 @@
+// elementui 日期选择器选择周
+.el-date-table /deep/ td.in-range div,
+.el-date-table /deep/ td.in-range div:hover,
+.el-date-table.is-week-mode /deep/ .el-date-table__row.current div,
+.el-date-table.is-week-mode /deep/ .el-date-table__row:hover div {
+    background-color: tint(@primary-color, 70%);
+}
+.el-picker-panel /deep/ .el-date-table td.end-date span,
+.el-picker-panel /deep/ .el-date-table td.start-date span {
+    background-color: @primary-color;
+}
+.el-picker-panel /deep/ .el-date-table td.today span {
+    color: @primary-color;
+}
+.el-picker-panel /deep/ .el-date-table td.today.end-date span,
+.el-picker-panel /deep/ .el-date-table td.today.start-date span {
+    color: #fff;
+}
+.el-picker-panel /deep/ .el-date-picker__header {
+    .el-picker-panel__icon-btn:hover {
+        color: @primary-color;
+    }
+    .el-date-picker__header-label:hover {
+        color: @primary-color;
+    }
+}
+.ivu-breadcrumb {
+    margin-top: 10px !important;
+    margin-left: 24px !important;
+}
+.xc-color {
+    color: @primary-color;
+}
+// 设置el滚动条
+.el-scrollbar__wrap {
+    overflow-x: hidden;
+}
+.scroll-none {
+    scrollbar-width: none;
+}
+.el-scrollbar__bar.is-vertical {
+    width: 0;
+}
+.el-scrollbar__view {
+    height: 100%;
+}
