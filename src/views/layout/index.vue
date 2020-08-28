@@ -1,7 +1,7 @@
 <template src="./index.tpl.html"></template>
 <script>
 import TopHeader from '@component/header';
-import { watermark } from '../../libs/utils';
+import util from '../../libs/utils';
 export default {
     components: {
         TopHeader
@@ -52,7 +52,7 @@ export default {
             this.$refs.side1.toggleCollapse();
         },
         setWatermark(sysUser) {
-            watermark({
+            util.watermark({
                 // eslint-disable-next-line camelcase
                 watermark_txt: `${sysUser.name} ${sysUser.jobsn || sysUser.username}`,
                 // eslint-disable-next-line camelcase

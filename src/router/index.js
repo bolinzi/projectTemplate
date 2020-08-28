@@ -12,10 +12,6 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title;
         store.commit('SET_META', to.meta);
-        // 判断是否继承父级路由菜单active
-        // if (!to.meta.inheritMenu) {
-        //     store.commit('SET_MENU_NAME', to.name);
-        // }
     }
     next();
 });
