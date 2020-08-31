@@ -25,6 +25,7 @@ export default {
                 new BMapLib.Point(this.center[0], this.center[1]),
                 this.zoom
             );
+            this.map.enableScrollWheelZoom(true);
         },
         /**
          * 初始化图表
