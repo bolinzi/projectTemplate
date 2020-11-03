@@ -1,6 +1,6 @@
 <template src="./index.tpl.html"></template>
 <script>
-import { randomString, encryption } from '@libs/utils';
+import util from '@libs/utils';
 import { pathRouterName } from '@libs/public';
 export default {
     name: 'login',
@@ -47,7 +47,7 @@ export default {
                 if (!valid) {
                     return;
                 }
-                const user = encryption({
+                const user = util.encryption({
                     data: {
                         password: this.formLogin.password
                     },
@@ -64,7 +64,7 @@ export default {
                     params: {
                         username: this.formLogin.userName,
                         password: user.password,
-                        randomStr: randomString(32),
+                        randomStr: util.randomString(32),
                         // eslint-disable-next-line camelcase
                         grant_type: 'password',
                         scope: 'server'

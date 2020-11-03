@@ -41,5 +41,19 @@ export default [{
                 }
             }
         ]
+    },
+    {
+        path: '/bdMap',
+        component: () => import('@/views/layout/index'),
+        children: [
+            {
+                path: '',
+                name: 'bdMap',
+                component: () => import('@/views/bdMap'),
+                meta: {
+                    title: '地图'
+                }
+            }
+        ]
     }
 ];

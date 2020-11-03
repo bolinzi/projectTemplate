@@ -1,6 +1,26 @@
-<div class="login">
-    <Spin fix>
-        <Icon type="ios-loading" size=18 class="spin-icon-load"></Icon>
-        <div>请稍等...</div>
-    </Spin>
+<div class="welcome">
+    <Breadcrumb>
+        <BreadcrumbItem>欢迎</BreadcrumbItem>
+    </Breadcrumb>
+    <div class="content">
+        <Button
+            style="margin-left: 12px;" 
+            icon="ios-download-outline" 
+            :loading="exportLoading" 
+            @click="exportExcel">
+            导出
+        </Button>
+        <Button
+            style="margin-left: 12px;"
+            v-debounce="a">
+            测试
+        </Button>
+        <div>时间：{{time | dateFormat('yyyy-MM-dd')}}</div>
+        <div>大小：{{size | fileSize}}</div>
+        <div>类型：{{value | phraseType('fault_type')}}</div>
+        <div>数组：{{arr | toString}}</div>
+        <div>为空测试：{{str | isEmpty('-')}}</div>
+        <div>空格测试：{{test | trim('1')}}</div>
+        <div>资产：{{n | upDigit()}}</div>
+    </div>
 </div>

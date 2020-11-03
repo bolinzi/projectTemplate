@@ -1,5 +1,6 @@
 <template src="./index.tpl.html"></template>
 <script>
+import util from '@libs/utils';
 export default {
     name: 'welcome',
     components: {},
@@ -96,9 +97,20 @@ export default {
     computed: {},
     created() {},
     mounted() {
+        this.load();
         this.initChart();
     },
     methods: {
+        load() {
+            // 测试生产随机数
+            console.log(util.randomString(10));
+            let a = {
+                a: 1,
+                b: 2
+            };
+            // 测试md5加密
+            console.log(util.sortByMd5(a));
+        },
         /**
          * 初始化图表
          */

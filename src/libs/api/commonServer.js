@@ -8,6 +8,6 @@
 let CONTEXT_PATH = `${process.env.VUE_APP_CONTEXT_PATH}`;
 
 export default {
-    // 登陆获取用户token
-    AUTH_LOGIN: CONTEXT_PATH + '/auth/oauth/token'
+    // 工单明细列表导出
+    GET_WORKORDER_HOMEPAGEEXCEL: CONTEXT_PATH + '/oam/workorder/web/homePageExcel'
 };

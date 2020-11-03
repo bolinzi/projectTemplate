@@ -1,4 +1,4 @@
 let urlArr = [
-    // '/oam/workorder/web/statistics/exportExcel' 导出示例
+    '/oam/workorder/web/homePageExcel'
 ];
 export default urlArr;
