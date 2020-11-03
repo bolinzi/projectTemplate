@@ -1,18 +1,34 @@
 <template src="./index.tpl.html"></template>
 <script>
+import util from '../../libs/utils';
 export default {
     name: 'welcome',
     components: {},
     props: '',
     data() {
         return {
-            exportLoading: false
+            exportLoading: false,
+            // time: 1604038002
+            time: '2012-05-11',
+            size: 1604038002,
+            value: '023',
+            arr: ['数组1', '数组2'],
+            str: null,
+            test: '   123 315 1215  ',
+            n: 15425.21
         };
     },
     computed: {},
     created() {},
-    mounted() {},
+    mounted() {
+    },
     methods: {
+        a() {
+            util.doCustomTimes(5, () => {
+                let a = util.accDiv(1, 5);
+                console.log(a);
+            });
+        },
         /**
          * 表单导出示例
          */

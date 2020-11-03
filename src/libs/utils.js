@@ -2,12 +2,13 @@
  * @file:      util工具
  * @author:    花夏(liubiao@itoxs.com) 柏林（735815255@qq.com）
  * @version:   V2.0.0
- * @date:      2020/8/27 下午4:24:09
+ * @date:      2020/10/27 下午4:24:09
  */
 import * as CryptoJS from 'crypto-js';
 import md5 from 'js-md5'
 export default {
     /**
+     * 执行自定义次数，表示callback回调方法执行times次
      * @param {Number} times 回调函数需要执行的次数
      * @param {Function} callback 回调函数
      */
@@ -17,12 +18,15 @@ export default {
             callback(i);
         }
     },
+    /**
+     * 生成随机len位随机字符串
+     * @param {Number} len 生成的位数
+     */
     randomString(len) {
         let random = '';
-        random = Math.ceil(Math.random() * 100000000000000)
-            .toString()
-            .substr(0, len || 4);
-        random = random + Date.now();
+        for (let i = 0; i < len; i++) {
+            random = random + Math.ceil(Math.random() * 9).toString()
+        }
         return random;
     },
     /**
@@ -50,6 +54,27 @@ export default {
         }
         return result;
     },
+    /**
+     * 签名校验排序及md5加密
+     * @param {*} data
+     */
+    sortByMd5(data) {
+        let newData = {}
+        let str = ''
+        let sortData = Object.keys(data).sort()
+        for (let key of sortData) {
+            newData[key] = data[key]
+        }
+        for (let key in newData) {
+            str += newData[key]
+        }
+        return md5(str)
+    },
+    /**
+     * 导出
+     * @param {*} data 导出的数据
+     * @param {String} name 导出的文件名
+     */
     downloadExcel(data, name) {
         const aEle = document.createElement('a');
         const href = URL.createObjectURL(
@@ -87,48 +112,6 @@ export default {
             });
         });
         return result;
-    },
-    /**
-     * 时间格式化
-     * @param {Date} date 日期
-     * @param {string} fmt 格式
-     */
-    dateFormat(date, fmt) {
-        var o = {
-            "M+": date.getMonth() + 1,
-            "d+": date.getDate(),
-            "h+": date.getHours(),
-            "m+": date.getMinutes(),
-            "s+": date.getSeconds(),
-            "q+": Math.floor((date.getMonth() + 3) / 3),
-            "S": date.getMilliseconds()
-        };
-        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
-        for (var k in o) {
-            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-        }
-        return fmt;
-    },
-    /**
-    * 获取当前月初
-    * @param {Date} date 日期
-    * @param {string} fmt 格式
-    */
-    dateFormatStart(date, fmt) {
-        var o = {
-            "M+": date.getMonth() + 1,
-            "d+": '01',
-            "h+": date.getHours(),
-            "m+": date.getMinutes(),
-            "s+": date.getSeconds(),
-            "q+": Math.floor((date.getMonth() + 3) / 3),
-            "S": date.getMilliseconds()
-        };
-        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
-        for (var k in o) {
-            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-        }
-        return fmt;
     },
     /**
      * 组装select数据(键值对形式)
@@ -179,22 +162,6 @@ export default {
         return sum
     },
     /**
-     * 签名校验排序及md5加密
-     * @param {*} data
-     */
-    sortByMd5(data) {
-        let newData = {}
-        let str = ''
-        let sortData = Object.keys(data).sort()
-        for (let key of sortData) {
-            newData[key] = data[key]
-        }
-        for (let key in newData) {
-            str += newData[key]
-        }
-        return md5(str)
-    },
-    /**
      * 设置cookie
      * @param {*} cname
      * @param {*} value
@@ -235,6 +202,38 @@ export default {
             document.cookie = cname + "=" + cval + ";expires=" + exp.toGMTString();
         }
     },
+    /**
+     * 设置localStorage
+     * @param {*} name
+     * @param {*} content
+     */
+    setStore(name, content) {
+        if (!name) return
+        if (typeof content !== 'string') {
+            content = JSON.stringify(content)
+        }
+        window.localStorage.setItem(name, content)
+    },
+    /**
+     * 获取localStorage
+     * @param {*} name
+     */
+    getStore(name) {
+        if (!name) return
+        return window.localStorage.getItem(name)
+    },
+    /**
+     * 删除localStorage
+     * @param {*} name
+     */
+    removeStore(name) {
+        if (!name) return
+        window.localStorage.removeItem(name)
+    },
+    /**
+     * 处理token
+     * @param {*} name
+     */
     getQueryString(name) {
         var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
         var r = window.location.search.substr(1).match(reg);
@@ -253,6 +252,184 @@ export default {
             return b[field] - a[field]
         })
         return data
+    },
+    /**
+     * 计算百分比
+     * @param {Number} num 分子数据
+     * @param {Number} total 分母数据
+     */
+    percentage(num, total) {
+        if (num === 0 || total === 0) {
+            return 0;
+        }
+        return (Math.round(num / total * 10000) / 100.00) + '%'; // 小数点后两位百分比
+    },
+    /**
+     * 计算两个浮点数相乘，避免丢失精度
+     * @param {Number} arg1 
+     * @param {Number} arg2 
+     */
+    accMul (arg1, arg2) {
+        var m = 0;
+        arg1 = arg1 || 0;
+        arg2 = arg2 || 0;
+        var s1 = arg1.toString();
+        var s2 = arg2.toString();
+        try{m+=s1.split(".")[1].length}catch(e){}
+        try{m+=s2.split(".")[1].length}catch(e){}
+        return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m);
+    },
+    // 两个浮点数求和
+    accAdd(num1,num2) {
+        let r1;
+        let r2;
+        let m;
+        try{
+            r1 = num1.toString().split('.')[1].length;
+        }catch(e){
+            r1 = 0;
+        }
+        try{
+            r2=num2.toString().split(".")[1].length;
+        }catch(e){
+            r2=0;
+        }
+        m=Math.pow(10,Math.max(r1,r2));
+        // return (num1*m+num2*m)/m;
+        return Math.round(num1*m+num2*m)/m;
+     },
+     // 两个浮点数相减
+     accSub(num1,num2) {
+        let r1;
+        let r2;
+        let m;
+        let n;
+        try{
+            r1 = num1.toString().split('.')[1].length;
+        }catch(e){
+            r1 = 0;
+        }
+        try{
+            r2=num2.toString().split(".")[1].length;
+        }catch(e){
+            r2=0;
+        }
+        m=Math.pow(10,Math.max(r1,r2));
+        n=(r1>=r2)?r1:r2;
+        return (Math.round(num1*m-num2*m)/m).toFixed(n);
+     },
+     // 两个浮点数相除
+     accDiv(num1,num2) {
+        let t1;
+        let t2;
+        let r1;
+        let r2;
+        try{
+            t1 = num1.toString().split('.')[1].length;
+        }catch(e){
+            t1 = 0;
+        }
+        try{
+            t2=num2.toString().split(".")[1].length;
+        }catch(e){
+            t2=0;
+        }
+        r1=Number(num1.toString().replace(".",""));
+        r2=Number(num2.toString().replace(".",""));
+        return (r1/r2)*Math.pow(10,t2-t1);
+    }, 
+    /**
+     * 计算时间差
+     * @param {String} date1 最近的时间YY-MM-SS
+     * @param {String} date2 以前的时间YY-MM-SS
+     */
+    dateMinus(date1, date2) {
+        var sdate = new Date(date1);
+        var now = new Date(date2);
+        var days = sdate.getTime() - now.getTime();
+        var day = parseInt(days / (1000 * 60 * 60 * 24));
+        return day;
+    },
+    /**
+     * 时间格式化,时间戳转时间
+     * @param {Date} date 日期
+     * @param {string} fmt 格式
+     */
+    dateFormat(date, fmt) {
+        var o = {
+            "M+": date.getMonth() + 1,
+            "d+": date.getDate(),
+            "h+": date.getHours(),
+            "m+": date.getMinutes(),
+            "s+": date.getSeconds(),
+            "q+": Math.floor((date.getMonth() + 3) / 3),
+            "S": date.getMilliseconds()
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        }
+        return fmt;
+    },
+    /**
+    * 获取当前月初
+    * @param {Date} date 日期
+    * @param {string} fmt 格式
+    */
+    dateFormatStart(date, fmt) {
+        var o = {
+            "M+": date.getMonth() + 1,
+            "d+": '01',
+            "h+": date.getHours(),
+            "m+": date.getMinutes(),
+            "s+": date.getSeconds(),
+            "q+": Math.floor((date.getMonth() + 3) / 3),
+            "S": date.getMilliseconds()
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        }
+        return fmt;
+    },
+    /**
+     * 时间加天数
+     * @param {string} date 日期YY-MM-SS
+     * @param {Number} days 增加天数days
+     */
+    addDate(date, days) {
+        if (!days) {
+            return date
+        }
+        date = new Date(date);
+        date.setDate(date.getDate() + days);
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let mm = "'" + month + "'";
+        let dd = "'" + day + "'";
+        if (mm.length === 3) {
+            month = "0" + month;
+        }
+        if (dd.length === 3) {
+            day = "0" + day;
+        }
+        let time = date.getFullYear() + "-" + month + "-" + day;
+        return time;
+    },
+    /**
+     * 防抖
+     * @param {*} fn
+     * @param {*} wait
+     */
+    debounce(fn, delay) {
+        let timer = null
+        return function () {
+            let arg = arguments
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                fn.apply(this, arg)
+            }, delay)
+        }
     },
     // 设置水印
     watermark(settings) {
